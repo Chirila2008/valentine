@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>💘 O întrebare mega partoasa</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden; /* pentru buton NU care fuge */
+        }
+
+        /* Ecranul cu întrebarea */
+        #question {
+            min-height: 100vh;
+            background: url("photos/my_background.jpg") center/cover no-repeat;
+            position: relative; /* pentru buton NU */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Overlay dacă poza e prea luminoasă */
+        #question::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        #question h1 {
+            color: white;
+            font-size: 48px;
+            font-style: italic; /* text italic */
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: absolute; /* pentru miscare */
+        }
+
+        /* Timer */
+        #countdown {
+            display: none;
+            text-align: center;
+            margin-top: 100px;
+            font-size: 26px;
+        }
+
+        /* Album */
+        #album {
+            display: none;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Întrebarea -->
+    <div id="question">
+        <h1>Vrei să fii Valentinul meu cacacioasa mea? ❤️</h1>
+        <div>
+            <button id="yesBtn">DA</button>
+            <button id="noBtn">NU</button>
+        </div>
+    </div>
+
+    <!-- Timer -->
+    <div id="countdown"></div>
+
+    <!-- Album -->
+    <div id="album">
+        <h2>💖 A sosit momentul 💖</h2>
+        <p>Aici va fi albumul digital + quiz-ul 😏</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const questionDiv = document.getElementById("question");
+        const countdownDiv = document.getElementById("countdown");
+        const albumDiv = document.getElementById("album");
+
+        // Data țintă: 14 februarie ora 17:00
+        const targetDate = new Date("2026-02-14T17:00:00");
+
+        // BUTONUL NU – fuge random când mouse-ul e peste
+        noBtn.addEventListener("mouseover", function() {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            noBtn.style.left = randomX + "px";
+            noBtn.style.top = randomY + "px";
+        });
+
+        // BUTONUL DA
+        yesBtn.addEventListener("click", function() {
+            questionDiv.style.display = "none";
+            checkDate();
+        });
+
+        function checkDate() {
+            const now = new Date();
+
+            if (now >= targetDate) {
+                showAlbum();
+            } else {
+                showCountdown();
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
+        }
+
+        function showCountdown() {
+            countdownDiv.style.display = "block";
+        }
+
+        function showAlbum() {
+            countdownDiv.style.display = "none";
+            albumDiv.style.display = "block";
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                showAlbum();
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            countdownDiv.innerHTML = `
+                <h2>⏳ Mai e puțin până vei sari din ghete basinoasooo 💘</h2>
+                <p>${days} zile • ${hours} ore • ${minutes} minute • ${seconds} secunde</p>
+            `;
+        }
+
+    </script>
+</body>
+</html>
