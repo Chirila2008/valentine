@@ -1,177 +1,680 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <title>💘 O întrebare mega partoasa</title>
+<meta charset="UTF-8">
+<title>💘 Valentinul Meu Digital 💘</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            overflow: hidden; /* pentru buton NU care fuge */
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
 
-        /* Ecranul cu întrebarea */
-        #question {
-            min-height: 100vh;
-            background: url("my_background.jpg") center/cover no-repeat;
-            position: relative; /* pentru buton NU */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+/* ================= BACKGROUND GENERAL ================= */
+body, html {
+    height: 100%;
+    width: 100%;
+}
 
-        /* Overlay dacă poza e prea luminoasă */
-        #question::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3);
-            z-index: 1;
-        }
+/* ================= ECRAN INTREBARE ================= */
+#question {
+    min-height: 100vh;
+    background: url("photos/my_background.jpg") center center no-repeat;
+    background-size: contain;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
-        #question h1 {
-            color: white;
-            font-size: 48px;
-            font-style: italic; /* text italic */
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 2;
-            margin-bottom: 30px;
-        }
+#question::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+}
 
-        button {
-            padding: 14px 30px;
-            font-size: 20px;
-            margin: 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            position: relative;
-            z-index: 2;
-        }
+#question h1 {
+    color: white;
+    font-size: 48px;
+    font-style: italic;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    position: relative;
+    z-index: 2;
+    margin-bottom: 30px;
+}
 
-        #yesBtn {
-            background-color: #4CAF50;
-            color: white;
-        }
+button {
+    padding: 14px 30px;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    position: relative;
+    z-index: 2;
+    transition: 0.3s;
+}
 
-        #noBtn {
-            background-color: #f44336;
-            color: white;
-            position: absolute; /* pentru miscare */
-        }
+#yesBtn { background-color: #4CAF50; color: white; }
+#yesBtn:hover { transform: scale(1.1); }
+#noBtn { background-color: #f44336; color: white; position: absolute; }
 
-        /* Timer */
-        #countdown {
-            display: none;
-            text-align: center;
-            margin-top: 100px;
-            font-size: 26px;
-        }
+/* ================= MENIU ================= */
+#menu {
+    display: none;
+    text-align: center;
+    padding: 50px;
+    min-height: 100vh;
+    background: url("photos/my_background.jpg") center center no-repeat;
+    background-size: contain;
+}
 
-        /* Album */
-        #album {
-            display: none;
-            text-align: center;
-            margin-top: 100px;
-        }
+#menu h2 { font-size: 36px; margin-bottom: 30px; color:white; text-shadow: 1px 1px 5px rgba(0,0,0,0.7); }
 
-    </style>
+.menu-btn {
+    background-color: #ff5e7e;
+    color: white;
+    font-size: 22px;
+    padding: 15px 30px;
+    margin: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-btn:hover { transform: scale(1.1); }
+
+.back-btn { background-color: #888; }
+
+/* ================= ALBUM ================= */
+#album {
+    display: none;
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    min-height: 100vh;
+}
+
+#album h2 { font-size: 40px; margin-bottom: 10px; }
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.photo-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: 0.4s;
+}
+
+.photo-card:hover { transform: scale(1.05); }
+
+.photo-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.photo-card p { padding: 15px; font-style: italic; }
+
+/* ================= SCRISORICI ================= */
+#letters {
+    display: none;
+    padding: 50px 20px;
+    min-height: 100vh;
+    text-align: left;
+    background: linear-gradient(135deg,#fad0c4,#ff9a9e);
+}
+
+#letters h2 { text-align:center; font-size:36px; margin-bottom:30px; }
+
+.letter {
+    background: white;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-style: italic;
+}
+
+/* ================= MESAJUL ZILEI ================= */
+#daily-message {
+    display: none;
+    padding: 50px 20px;
+    min-height: 100vh;
+    text-align: center;
+    background: linear-gradient(135deg,#ffb6c1,#ff69b4);
+}
+
+#daily-message h2 { font-size:36px; margin-bottom:30px; }
+#daily-message p { font-size:22px; font-style: italic; }
+
+/* ================= TIMER ================= */
+#together-timer {
+    display: none;
+    padding: 50px 20px;
+    text-align: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg,#c0ffee,#a0d4ff);
+}
+
+#together-timer h2 { font-size:36px; margin-bottom:30px; }
+#together-timer p { font-size:22px; font-style: italic; }
+
+/* ======= POPUP MESAJ ======= */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    font-size: 20px;
+    font-style: italic;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    animation: popupFade 0.3s ease-out;
+}
+
+.popup-content button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    background-color: #ff5e7e;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@keyframes popupFade {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+</style>
 </head>
 <body>
 
-    <!-- Întrebarea -->
-    <div id="question">
-        <h1>Vrei să fii Valentinul meu cacacioasa mea? ❤️</h1>
-        <div>
-            <button id="yesBtn">DA</button>
-            <button id="noBtn">NU</button>
-        </div>
+<!-- ECRAN INTREBARE -->
+<div id="question">
+    <h1>Vrei să fii Valentinul meu? ❤️</h1>
+    <div>
+        <button id="yesBtn">DA</button>
+        <button id="noBtn">NU</button>
+    </div>
+</div>
+
+<!-- MENIU -->
+<div id="menu">
+    <h2>💖 Alege ce vrei să vezi 💖</h2>
+    <button class="menu-btn" data-target="album">Albumul Nostru Cacacios</button>
+    <button class="menu-btn" data-target="letters">Scrisorici Aleatorii</button>
+    <button class="menu-btn" data-target="daily-message">Mesajul Zilei</button>
+    <button class="menu-btn" data-target="together-timer">De cât timp suntem împreună</button>
+    <button class="menu-btn" data-target="quiz-menu">Quiz-uri</button>
+</div>
+
+<!-- ALBUM -->
+<div id="album">
+    <button class="menu-btn back-btn">🔙 Înapoi la meniu</button>
+    <h2>💖 Albumul Nostru Cacacios 💖</h2>
+    <p>Explorează imaginile, cine știe ce surpriză mai ascund unele dintre ele… 😉</p>
+    <div class="gallery">
+        <div class="photo-card"><img src="photos/1.jpg"><p>Au fost momente când te-am făcut să te simți iubită 💕</p></div>
+        <div class="photo-card"><img src="photos/2.jpg"><p>Au fost momente când eram frumosi și cacaciosi împreună</p></div>
+        <div class="photo-card"><img src="photos/3.jpg"><p>Au fost momente când te-am scos în orașel 😍</p></div>
+        <div class="photo-card"><img src="photos/4.jpg"><p>Au fost momente când te-am văzut cum faceai caca 💕</p></div>
+        <div class="photo-card"><img src="photos/5.jpg"><p>Au fost momente în care te-am făcut să fii curioasă</p></div>
+        <div class="photo-card"><img src="photos/6.jpg"><p>Au fost momente în care stăteam dezbrăcați sub pături 😍</p></div>
+        <div class="photo-card"><img src="photos/7.jpg"><p>Au fost momente în care ne-am sărutat</p></div>
+        <div class="photo-card"><img src="photos/8.jpg"><p>Au fost momente în care te-am dezamăgit, îmi pare rău</p></div>
+        <div class="photo-card"><img src="photos/9.jpg"><p>Au fost momente în care te-am văzut cum faceai pipi 😍</p></div>
+        <div class="photo-card"><img src="photos/10.jpg"><p>Primul Crăciun împreună</p></div>
+        <div class="photo-card"><img src="photos/11.jpg"><p>Au fost momente în care erai horny</p></div>
+        <div class="photo-card"><img src="photos/12.jpg"><p>Au fost momente în care mai făceam sport</p></div>
+        <div class="photo-card"><img src="photos/13.jpg"><p>Au fost multe momente în care am papat super mega bine</p></div>
+        <div class="photo-card"><img src="photos/14.jpg"><p>Au fost momente în care ne comportam ca niște bebeluși</p></div>
+    </div>
+</div>
+
+<!-- SCRISORICI -->
+<div id="letters" style="display:none; padding:50px; text-align:center; min-height:100vh; background:linear-gradient(135deg,#ffe0f0,#ffc0cb);">
+
+    <button class="menu-btn back-btn" onclick="backToMenu()">🔙 Înapoi la meniu</button>
+    
+    <h2>💌 Scrisorici 💌</h2>
+
+    <!-- MENIU SCRISORI -->
+    <div id="letters-menu">
+        <button class="menu-btn" onclick="openLetter('vday')">💘 Scrisoare V Day</button>
     </div>
 
-    <!-- Timer -->
-    <div id="countdown"></div>
-
-    <!-- Album -->
-    <div id="album">
-        <h2>💖 A sosit momentul 💖</h2>
-        <p>Aici va fi albumul digital + quiz-ul 😏</p>
+    <!-- CONTINUT SCRISOARE -->
+    <div id="letter-content" style="display:none; margin-top:40px;">
+        <button class="menu-btn back-btn" onclick="backToLettersMenu()">⬅ Înapoi la scrisori</button>
+        <div id="letter-text" style="margin-top:30px; font-size:20px; max-width:700px; margin-left:auto; margin-right:auto;"></div>
     </div>
 
-    <!-- JavaScript -->
-    <script>
-        const yesBtn = document.getElementById("yesBtn");
-        const noBtn = document.getElementById("noBtn");
-        const questionDiv = document.getElementById("question");
-        const countdownDiv = document.getElementById("countdown");
-        const albumDiv = document.getElementById("album");
+</div>
 
-        // Data țintă: 14 februarie ora 17:00
-        const targetDate = new Date("2026-02-14T17:00:00");
 
-        // BUTONUL NU – fuge random când mouse-ul e peste
-        noBtn.addEventListener("mouseover", function() {
-            const maxX = window.innerWidth - noBtn.offsetWidth;
-            const maxY = window.innerHeight - noBtn.offsetHeight;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-            noBtn.style.left = randomX + "px";
-            noBtn.style.top = randomY + "px";
+<!-- MESAJ ZILEI -->
+<div id="daily-message">
+    <button class="menu-btn back-btn">🔙 Înapoi la meniu</button>
+    <h2>💬 Mesajul Zilei 💬</h2>
+    <p id="dailyText">...</p>
+</div>
+
+<!-- TIMER -->
+<div id="together-timer">
+    <button class="menu-btn back-btn">🔙 Înapoi la meniu</button>
+    <h2>⏰ De cât timp suntem împreună</h2>
+    <p id="togetherText">...</p>
+</div>
+
+<!-- QUIZ MENU -->
+<div id="quiz-menu" style="display:none; padding:50px; min-height:100vh; background:linear-gradient(135deg,#ffe0f0,#ffc0cb); text-align:center;">
+    <button class="menu-btn back-btn">🔙 Înapoi la meniu</button>
+    <h2>💘 Alege un Quiz 💘</h2>
+    <button class="menu-btn" onclick="openQuizInstructions()">Quiz V Day</button>
+</div>
+
+<!-- QUIZ INSTRUCTIONS -->
+<div id="quiz-instructions" style="display:none; padding:50px; min-height:100vh; background:linear-gradient(135deg,#ffc0cb,#ff99cc); text-align:center;">
+    <button class="menu-btn back-btn">🔙 Înapoi</button>
+    <h2>Instrucțiuni Quiz V Day</h2>
+    <p>
+        Răspunde la întrebările quiz-ului.<br>
+        Fiecare răspuns corect valorează 10 lei.<br>
+        Banii câștigați îi poți folosi la următorul date 😏
+    </p>
+    <button class="menu-btn" onclick="startQuiz()">Începe Quiz</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-container" style="display:none; padding:50px; min-height:100vh; background:linear-gradient(135deg,#ffb6c1,#ff69b4);">
+
+    <div style="position:fixed; top:20px; right:30px; background:white; padding:10px 20px; border-radius:20px; font-weight:bold;">
+        💰 Balance: <span id="balance">0</span> lei
+    </div>
+
+    <button class="menu-btn back-btn">🔙 Ieșire Quiz</button>
+
+    <h2 id="quiz-question"></h2>
+    <div id="quiz-answers" style="margin-top:30px;"></div>
+</div>
+
+<!-- QUIZ FINAL -->
+<div id="quiz-final" style="display:none; padding:50px; min-height:100vh; background:linear-gradient(135deg,#ff69b4,#ff1493); text-align:center; color:white;">
+    <h2>🎉 Quiz Finalizat 🎉</h2>
+    <p id="quiz-result"></p>
+    <button class="menu-btn back-btn">🔙 Înapoi la meniu</button>
+</div>
+
+<!-- POPUP MESAJ -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+        <p id="popupText">Mesajul tău aici</p>
+        <button id="popupClose">OK</button>
+    </div>
+</div>
+
+<script>
+// ================= INTREBARE =================
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const questionDiv = document.getElementById("question");
+const menuDiv = document.getElementById("menu");
+
+yesBtn.addEventListener("click", () => {
+    questionDiv.style.display="none";
+    menuDiv.style.display="block";
+});
+
+noBtn.addEventListener("mouseover", ()=>{
+    noBtn.style.left = Math.random()*(window.innerWidth-noBtn.offsetWidth)+"px";
+    noBtn.style.top = Math.random()*(window.innerHeight-noBtn.offsetHeight)+"px";
+});
+
+// ================= BACK BUTTON =================
+document.querySelectorAll(".back-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+        document.querySelectorAll("#album,#letters,#daily-message,#together-timer,#quiz-menu,#quiz-instructions,#quiz-container,#quiz-final").forEach(sec=>sec.style.display="none");
+        menuDiv.style.display="block";
+    });
+});
+
+// ================= MENU LOGIC =================
+document.querySelectorAll(".menu-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+        const target = btn.getAttribute("data-target");
+        if(target){ menuDiv.style.display="none"; }
+        if(target==="album") showAlbum();
+        else if(target==="letters") document.getElementById("letters").style.display="block";
+        else if(target==="daily-message") showDailyMessage();
+        else if(target==="together-timer") showTogetherTimer();
+        else if(target==="quiz-menu") document.getElementById("quiz-menu").style.display="block";
+    });
+});
+
+// ================= ALBUM + POPUP =================
+function showAlbum(){
+    const albumDiv = document.getElementById("album");
+    albumDiv.style.display="block";
+
+    const messages = [
+        "Sper ca ti a placut surpriza ",
+        "Sa stii ca ma bucur ca nu ne am despartit in aceea zi",
+        "Ce sexy eram nu i asa ? ",
+        "Imi place cand faci caca cu mine pe apel dar iti dau un sfat nu te mai screme asa lasa l sa cada de la sine",
+        "Mai tii minte de ce ta uitai asa la mn ?",
+       "Asa imi place sa stau cel mai mult cu tine !!!! ma simt liber si fericit",
+        "Imi place mult sa ti dau puuup",
+        "imi pare rau pentru toate acele momente !",
+        "Asta nu imi place cand o faci cu mine pe apel ca se aude jetu prea tare",
+        "A fost asa frumossssss",
+        "Imi place cand esti asa !!!",
+        "Cand mai mergem si noi la sala cacacioaso",
+        "Cel mai mult cand vin la tn acs si mi iei de papa imi place taco bel",
+        "iti zic un mic secret mereu esti amuzanta chiar daca nu ti o zic!!!"
+    ];
+
+    const photos = albumDiv.querySelectorAll(".gallery .photo-card img");
+    const popupOverlay = document.getElementById("popupOverlay");
+    const popupText = document.getElementById("popupText");
+    const popupClose = document.getElementById("popupClose");
+
+    photos.forEach((photo,index)=>{
+        photo.addEventListener("click",()=>{
+            popupText.textContent=messages[index];
+            popupOverlay.style.display="flex";
         });
+    });
 
-        // BUTONUL DA
-        yesBtn.addEventListener("click", function() {
-            questionDiv.style.display = "none";
-            checkDate();
-        });
+    popupClose.addEventListener("click",()=>{ popupOverlay.style.display="none"; });
+    popupOverlay.addEventListener("click",(e)=>{ if(e.target===popupOverlay) popupOverlay.style.display="none"; });
+}
 
-        function checkDate() {
-            const now = new Date();
+// ================= MESAJ ZILEI =================
+const dailyMessages = [
+    "Nu uita sa zambesti azi",
+    "Bea apa suficienta",
+    "Îți iubesc ochisorii",
+    "O zi buna pentru noi doi",
+    "Maine va fi o zi interesanta",
+    "Zambeste, meriti",
+    "Îți place cafeaua de dimineață?",
+    "Ne futem wekeend ul asta?",
+    "Ma mai iubesti?",
+    "Te iubesc cacacioaso",
+    "Mc wekeend ul asta ?",
+    "fa ti temele daca ai !!",
+    "iti pute pasaricu ",
+    "spala te ca puti",
+    "daca citesti asta trebuie sa imi povesteti chiaar acum ce ti s a intamplat astazi!!",
+    "Buna",
+    "Nu stiu ce sa scriu am cucu mareee",
+    "Daca citesti asta trebuie sa imi iei un starbucks",
+    "Daca citesti asta trebuie sa iti iau un starbucks",
+    "lu stef ii pute cucu",
+    "salut cum ti a fost ziua ?",
+    "salut te futi?",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "daca citesti asta da mi mesaj cu cucuriguuuu",
+    "Astepti vara ?",
+    "Sloboz",
+    "Daca citesti asta nu uita ca iti sunt mereu alaturi sa ma contactezi cand ai nevoie!",
+    "Film asta seara ?",
+    "Iti pute subratul yuck",
+    "de ce a trecut gaina strada ?? ",
+    "CF STEF",
+    "ai facut caca azi?",
+    "de cate ori ai facut caca azi?",
+    "cine e cea mai frumoasa fetiscana din lume ? ",
+    "iti dau pup pe ochisor",
+    "iti dau pup pe frunte",
+    "starbucks cupon 25 ron",
+    "daca ti a picat asta imi iei un nachos la film hihihihaihah",
+    "da un part in cinstea mea",
+    "azi faci caca mult e ziua ta norocoasa!",
+    "cum mai estiii",
+    "bunaaaaa",
+    "cie fasi tu wai",
+    "mai suntem impreuna ? daca da sa mi pupi ",
+    "Sa nu iti mai fie rusinica de nimic niciodata nu uita mihaita a facut pipi in chiuveta fetelor ",
+    "Buna te iubeibeiebeeeieiescccccc",
+    "Daca citesti asta sa stii ca miaita mereu te iubbubububleste chiar daca nu iti arata mereu asta",
+    "Daca citesti asta sa nu iti fie rusine sa ma contactezi in legatura cu orice sa stii ca chiar ma intereseaza ce spui mereu daca ai nevoie de cineva eu mereu iti voi fii alaturi 1",
+    "fa un part in cinstea mea",
+    "cum a fost caca ul de azi?",
+    "Zi mi ce ai visat azi",
+     "Daca citesti asta imi papi cucu",
+        "Buna ce ai visaaat",
+        "Salut ce ai papat",
+        "Te iubesc",
+        "Ia un pupic",
+        "Ne futem asta seara ?",
+        "Cand a fost ultima data cand ai facut part??",
+        "Acesta este doar începutul site-ului",
+        "Te iubesc mult",
+        "Cand a fost ultima data cand ai facut caca?",
+        "Nu uita sa bei 2L de apa",
+        "Antrenează-te",
+        "Papa sanatos azi!",
+        "Vrei sa avem un bebe?"
+];
+function showDailyMessage(){
+    const dailyDiv = document.getElementById("daily-message");
+    dailyDiv.style.display="block";
+    const index = Math.floor(new Date().getTime()/86400000)%dailyMessages.length;
+    document.getElementById("dailyText").textContent = dailyMessages[index];
+}
 
-            if (now >= targetDate) {
-                showAlbum();
+// ================= TIMER LIVE =================
+function showTogetherTimer(){
+    const div = document.getElementById("together-timer");
+    div.style.display="block";
+    const togetherText = document.getElementById("togetherText");
+    const startDate = new Date(2024,5,2,6,7,0); // 2 iunie 2024 ora 6:07
+
+    function updateTimer(){
+        const now = new Date();
+        const diff = now - startDate;
+        const seconds = Math.floor(diff/1000);
+        const minutes = Math.floor(seconds/60);
+        const hours = Math.floor(minutes/60);
+        const days = Math.floor(hours/24);
+        const months = Math.floor(days/30);
+        const years = Math.floor(months/12);
+        togetherText.textContent = `Suntem împreună de aproximativ ${years} ani, ${months%12} luni, ${days} zile, ${hours%24} ore, ${minutes%60} minute, ${seconds%60} secunde.\n(${seconds} secunde în total, adică ${(seconds/1000000000).toFixed(3)} miliarde secunde)`;
+    }
+    updateTimer();
+    setInterval(updateTimer,1000);
+}
+
+// ================= QUIZ COMPLET =================
+const quizQuestions = [
+    {
+        question: "Care este artistul nostru preferat?",
+        answers: ["Panterica", "jaydez", "Moon KID", "LIL UZI"],
+        correct: 2
+    },
+    {
+        question: "Ce mancare ne place sa o mancam impreuna cel mai mult?",
+        answers: ["Pizza", "Mc", "Paste", "Salată"],
+        correct: 0
+    },
+    {
+        question: "Care este hobby-ul meu preferat?",
+        answers: ["Pescuit", "Programarea", "Fitness", "Jocuri video"],
+        correct: 0
+    },
+    {
+        question: "Care este momentul meu preferat al hang over ului?",
+        answers: ["Fulala", "Film", "Mancare ", "Nani"],
+        correct: 0
+    },
+    {
+        question: "Ce prefer ?",
+        answers: ["terasa", "Hang over", "film ", "restaurant"],
+        correct: 1
+    },
+    {
+        question: "Cine a spus primu te iubesc?",
+        answers: ["eu", "tu", "amandoi", "Niciunu"],
+        correct: 0
+    },
+    {
+        question: "Cine e mai suparacios?",
+        answers: ["eu", "tu", "amandoi", "Niciunu"],
+        correct: 1
+    },
+    {
+        question: "cine vorbeste engleza mai bine?",
+        answers: ["eu", "tu", "amandoi", "Niciunu"],
+        correct: 1
+    },
+    {
+        question: "Capitala cehiei?",
+        answers: ["Bratislava", "Berlin", "Prague", "Budapesta"],
+        correct: 2
+    },
+    {
+        question: "Ma iubesti?",
+        answers: ["Da", "Nu", "deloc", "putin"],
+        correct: 0
+    }
+
+];
+
+let currentQuestion = 0;
+let balance = 0;
+
+function openQuizInstructions() {
+    document.getElementById("quiz-menu").style.display = "none";
+    document.getElementById("quiz-instructions").style.display = "block";
+}
+
+function startQuiz() {
+    document.getElementById("quiz-instructions").style.display = "none";
+    document.getElementById("quiz-container").style.display = "block";
+    currentQuestion = 0;
+    balance = 0;
+    document.getElementById("balance").textContent = balance;
+    showQuizQuestion();
+}
+
+function showQuizQuestion() {
+    const q = quizQuestions[currentQuestion];
+    const questionEl = document.getElementById("quiz-question");
+    const answersEl = document.getElementById("quiz-answers");
+
+    questionEl.textContent = q.question;
+    answersEl.innerHTML = "";
+
+    q.answers.forEach((ans, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans;
+        btn.className = "menu-btn";
+        btn.style.margin = "10px";
+        btn.onclick = () => {
+            if(index === q.correct) {
+                balance += 10;
+                document.getElementById("balance").textContent = balance;
+            }
+            currentQuestion++;
+            if(currentQuestion < quizQuestions.length) {
+                showQuizQuestion();
             } else {
-                showCountdown();
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
+                finishQuiz();
             }
-        }
+        };
+        answersEl.appendChild(btn);
+    });
+}
 
-        function showCountdown() {
-            countdownDiv.style.display = "block";
-        }
+function finishQuiz() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("quiz-final").style.display = "block";
+    document.getElementById("quiz-result").textContent = `Ai câștigat ${balance} lei! 💰`;
+}
+// DESCHIDE SECTIUNEA SCRISORI DIN MENIU
+window.showLetters = function() {
+    hideAll();
+    document.getElementById("letters").style.display = "block";
+}
 
-        function showAlbum() {
-            countdownDiv.style.display = "none";
-            albumDiv.style.display = "block";
-        }
+// DESCHIDE O SCRISOARE
+window.openLetter = function(type) {
 
-        function updateCountdown() {
-            const now = new Date();
-            const diff = targetDate - now;
+    document.getElementById("letters-menu").style.display = "none";
+    document.getElementById("letter-content").style.display = "block";
 
-            if (diff <= 0) {
-                showAlbum();
-                return;
-            }
+    const text = document.getElementById("letter-text");
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
+    if(type === "vday") {
+        text.innerHTML = 
+                 `
+                Draga cacacioasa,
+        E clar ca nu fac bine ca te obisnuiesc cu scrisorici asa di des dar de data asta uite ca o fac 
+        mai special oliaca si este o scrisoare electronica , desi stiu ca probabil e alt sentiment sa primesti 
+        o scrisorica fizica , trebuie sa intelegi ca omenirea va evolua si cel mai probabil in 100 de ani asa vor 
+        primii toate fetele scrisorici , iar tu vei fi una dintre primele fete din lume care a primit o astfel de scrisoare,
+        de aceea ar trebui sa te simti unica si senzational de bine , bun revenind la ale noastre imi pare extrem de rau ca esti racita ,
+        si mi mai pare rau si ca am cobit cand am zis ca vei raci cand eram la scarite la lic , dar norocul tau este ca in maxim 2 zile ar trebui sa iti revii,
+        ceea ce inseamna ca vom putea iesi si noi mai mult in aceasta vacanta macar de 3 ori asa , in rest tin sa te anunt ca daca iti place acest site
+        il voi imbunatatii lunar si il voi face sa arate din ce in ce mai bine , totodata mi s ar parea tare spre ex asta ca o idee , sa creez o sectiune cu vacante si 
+        cand mergem in vacante si facem poze sa adaug acolo bucuresti si sa fie tot ce am facut noi si asa mai departe , inca o chestie despre site
+        ai grija ca link ul asta il poate deschide oricine si poate vedea ce e aici deci de sugerat si de preferat ar fi sa nu l mai dai la nimeni!!
+            In concluzie, sper ca ti a placut aceasta mica scrisorica a lui miaita care ti iubeste foarte foarte mult si spera sa te vada cat mai curand posibil
+            insanatosiri grabnice!!!!
+        
 
-            countdownDiv.innerHTML = `
-                <h2>⏳ Mai e puțin până vei sari din ghete basinoasooo 💘</h2>
-                <p>${days} zile • ${hours} ore • ${minutes} minute • ${seconds} secunde</p>
-            `;
-        }
 
-    </script>
+                                        Cu drag,
+                                            Miaita!
+        
+        
+        
+        
+    
+        `
+    ;
+            
+    }   
+}
+// INAPOI LA MENIU SCRISORI
+window.backToLettersMenu = function() {
+    document.getElementById("letters-menu").style.display = "block";
+    document.getElementById("letter-content").style.display = "none";
+}
+
+</script>
 </body>
 </html>
-
-
-
