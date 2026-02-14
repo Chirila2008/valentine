@@ -20,8 +20,8 @@ body, html {
 /* ================= ECRAN INTREBARE ================= */
 #question {
     min-height: 100vh;
-    background: url("my_background.jpg") center center no-repeat;
-    background-size: cover; /* corectat pentru a ocupa întregul ecran */
+    background: url("photos/my_background.jpg") center center no-repeat;
+    background-size: contain;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -71,7 +71,7 @@ button {
     padding: 50px;
     min-height: 100vh;
     background: url("my_background.jpg") center center no-repeat;
-    background-size: cover; /* corectat pentru a ocupa întregul ecran */
+    background-size: cover;
 }
 
 #menu h2 { font-size: 36px; margin-bottom: 30px; color:white; text-shadow: 1px 1px 5px rgba(0,0,0,0.7); }
@@ -122,7 +122,7 @@ button {
 .photo-card img {
     width: 100%;
     height: auto;
-    object-fit: cover; /* corectat pentru a se afișa corect */
+    object-fit: cover;
     display: block;
 }
 
@@ -277,6 +277,7 @@ button {
 
 </div>
 
+
 <!-- MESAJ ZILEI -->
 <div id="daily-message">
     <button class="menu-btn back-btn">🔙 Înapoi la meniu</button>
@@ -410,103 +411,270 @@ function showAlbum(){
         });
     });
 
-    popupClose.addEventListener("click",()=>{
-        popupOverlay.style.display="none";
+    popupClose.addEventListener("click",()=>{ popupOverlay.style.display="none"; });
+    popupOverlay.addEventListener("click",(e)=>{ if(e.target===popupOverlay) popupOverlay.style.display="none"; });
+}
+
+// ================= MESAJ ZILEI =================
+const dailyMessages = [
+    "Nu uita sa zambesti azi",
+    "Bea apa suficienta",
+    "Îți iubesc ochisorii",
+    "O zi buna pentru noi doi",
+    "Maine va fi o zi interesanta",
+    "Zambeste, meriti",
+    "Îți place cafeaua de dimineață?",
+    "Ne futem wekeend ul asta?",
+    "Ma mai iubesti?",
+    "Te iubesc cacacioaso",
+    "Mc wekeend ul asta ?",
+    "fa ti temele daca ai !!",
+    "iti pute pasaricu ",
+    "spala te ca puti",
+    "daca citesti asta trebuie sa imi povesteti chiaar acum ce ti s a intamplat astazi!!",
+    "Buna",
+    "Nu stiu ce sa scriu am cucu mareee",
+    "Daca citesti asta trebuie sa imi iei un starbucks",
+    "Daca citesti asta trebuie sa iti iau un starbucks",
+    "lu stef ii pute cucu",
+    "salut cum ti a fost ziua ?",
+    "salut te futi?",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "te iubesc",
+    "daca citesti asta da mi mesaj cu cucuriguuuu",
+    "Astepti vara ?",
+    "Sloboz",
+    "Daca citesti asta nu uita ca iti sunt mereu alaturi sa ma contactezi cand ai nevoie!",
+    "Film asta seara ?",
+    "Iti pute subratul yuck",
+    "de ce a trecut gaina strada ?? ",
+    "CF STEF",
+    "ai facut caca azi?",
+    "de cate ori ai facut caca azi?",
+    "cine e cea mai frumoasa fetiscana din lume ? ",
+    "iti dau pup pe ochisor",
+    "iti dau pup pe frunte",
+    "starbucks cupon 25 ron",
+    "daca ti a picat asta imi iei un nachos la film hihihihaihah",
+    "da un part in cinstea mea",
+    "azi faci caca mult e ziua ta norocoasa!",
+    "cum mai estiii",
+    "bunaaaaa",
+    "cie fasi tu wai",
+    "mai suntem impreuna ? daca da sa mi pupi ",
+    "Sa nu iti mai fie rusinica de nimic niciodata nu uita mihaita a facut pipi in chiuveta fetelor ",
+    "Buna te iubeibeiebeeeieiescccccc",
+    "Daca citesti asta sa stii ca miaita mereu te iubbubububleste chiar daca nu iti arata mereu asta",
+    "Daca citesti asta sa nu iti fie rusine sa ma contactezi in legatura cu orice sa stii ca chiar ma intereseaza ce spui mereu daca ai nevoie de cineva eu mereu iti voi fii alaturi 1",
+    "fa un part in cinstea mea",
+    "cum a fost caca ul de azi?",
+    "Zi mi ce ai visat azi",
+     "Daca citesti asta imi papi cucu",
+        "Buna ce ai visaaat",
+        "Salut ce ai papat",
+        "Te iubesc",
+        "Ia un pupic",
+        "Ne futem asta seara ?",
+        "Cand a fost ultima data cand ai facut part??",
+        "Acesta este doar începutul site-ului",
+        "Te iubesc mult",
+        "Cand a fost ultima data cand ai facut caca?",
+        "Nu uita sa bei 2L de apa",
+        "Antrenează-te",
+        "Papa sanatos azi!",
+        "Vrei sa avem un bebe?"
+];
+function showDailyMessage(){
+    const dailyDiv = document.getElementById("daily-message");
+    dailyDiv.style.display="block";
+    const index = Math.floor(new Date().getTime()/86400000)%dailyMessages.length;
+    document.getElementById("dailyText").textContent = dailyMessages[index];
+}
+
+// ================= TIMER LIVE =================
+function showTogetherTimer(){
+    const div = document.getElementById("together-timer");
+    div.style.display="block";
+    const togetherText = document.getElementById("togetherText");
+    const startDate = new Date(2024,5,2,6,7,0); // 2 iunie 2024 ora 6:07
+
+    function updateTimer(){
+        const now = new Date();
+        const diff = now - startDate;
+        const seconds = Math.floor(diff/1000);
+        const minutes = Math.floor(seconds/60);
+        const hours = Math.floor(minutes/60);
+        const days = Math.floor(hours/24);
+        const months = Math.floor(days/30);
+        const years = Math.floor(months/12);
+        togetherText.textContent = `Suntem împreună de aproximativ ${years} ani, ${months%12} luni, ${days} zile, ${hours%24} ore, ${minutes%60} minute, ${seconds%60} secunde.\n(${seconds} secunde în total, adică ${(seconds/1000000000).toFixed(3)} miliarde secunde)`;
+    }
+    updateTimer();
+    setInterval(updateTimer,1000);
+}
+
+// ================= QUIZ COMPLET =================
+const quizQuestions = [
+    {
+        question: "Care este artistul nostru preferat?",
+        answers: ["Panterica", "jaydez", "Moon KID", "LIL UZI"],
+        correct: 2
+    },
+    {
+        question: "Ce mancare ne place sa o mancam impreuna cel mai mult?",
+        answers: ["Pizza", "Mc", "Paste", "Salată"],
+        correct: 0
+    },
+    {
+        question: "Care este hobby-ul meu preferat?",
+        answers: ["Pescuit", "Programarea", "Fitness", "Jocuri video"],
+        correct: 0
+    },
+    {
+        question: "Care este momentul meu preferat al hang over ului?",
+        answers: ["Fulala", "Film", "Mancare ", "Nani"],
+        correct: 0
+    },
+    {
+        question: "Ce prefer ?",
+        answers: ["terasa", "Hang over", "film ", "restaurant"],
+        correct: 1
+    },
+    {
+        question: "Cine a spus primu te iubesc?",
+        answers: ["eu", "tu", "amandoi", "Niciunu"],
+        correct: 0
+    },
+    {
+        question: "Cine e mai suparacios?",
+        answers: ["eu", "tu", "amandoi", "Niciunu"],
+        correct: 1
+    },
+    {
+        question: "cine vorbeste engleza mai bine?",
+        answers: ["eu", "tu", "amandoi", "Niciunu"],
+        correct: 1
+    },
+    {
+        question: "Capitala cehiei?",
+        answers: ["Bratislava", "Berlin", "Prague", "Budapesta"],
+        correct: 2
+    },
+    {
+        question: "Ma iubesti?",
+        answers: ["Da", "Nu", "deloc", "putin"],
+        correct: 0
+    }
+
+];
+
+let currentQuestion = 0;
+let balance = 0;
+
+function openQuizInstructions() {
+    document.getElementById("quiz-menu").style.display = "none";
+    document.getElementById("quiz-instructions").style.display = "block";
+}
+
+function startQuiz() {
+    document.getElementById("quiz-instructions").style.display = "none";
+    document.getElementById("quiz-container").style.display = "block";
+    currentQuestion = 0;
+    balance = 0;
+    document.getElementById("balance").textContent = balance;
+    showQuizQuestion();
+}
+
+function showQuizQuestion() {
+    const q = quizQuestions[currentQuestion];
+    const questionEl = document.getElementById("quiz-question");
+    const answersEl = document.getElementById("quiz-answers");
+
+    questionEl.textContent = q.question;
+    answersEl.innerHTML = "";
+
+    q.answers.forEach((ans, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans;
+        btn.className = "menu-btn";
+        btn.style.margin = "10px";
+        btn.onclick = () => {
+            if(index === q.correct) {
+                balance += 10;
+                document.getElementById("balance").textContent = balance;
+            }
+            currentQuestion++;
+            if(currentQuestion < quizQuestions.length) {
+                showQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        };
+        answersEl.appendChild(btn);
     });
 }
 
-// ================= SCRISORI =================
-const lettersMenu = document.getElementById("letters-menu");
-const letterContent = document.getElementById("letter-content");
-const letterText = document.getElementById("letter-text");
-
-function openLetter(type){
-    lettersMenu.style.display="none";
-    letterContent.style.display="block";
-    if(type==="vday") letterText.innerHTML = `
-    Dragostea mea,
-    <br><br>
-    În această zi specială de Valentine's, vreau să-ți spun cât de mult te iubesc...
-    <br><br>
-    Cu drag,
-    Eu
-    `;
+function finishQuiz() {
+    document.getElementById("quiz-container").style.display = "none";
+    document.getElementById("quiz-final").style.display = "block";
+    document.getElementById("quiz-result").textContent = `Ai câștigat ${balance} lei! 💰`;
 }
-function backToLettersMenu(){
-    lettersMenu.style.display="block";
-    letterContent.style.display="none";
+// DESCHIDE SECTIUNEA SCRISORI DIN MENIU
+window.showLetters = function() {
+    hideAll();
+    document.getElementById("letters").style.display = "block";
 }
 
-// ================= DAILY MESSAGE =================
-function showDailyMessage(){
-    menuDiv.style.display="none";
-    document.getElementById("daily-message").style.display="block";
-    const msgs = ["Te iubesc enorm! ❤️","Ziua ta să fie la fel de frumoasă ca tine! 💕"];
-    document.getElementById("dailyText").textContent = msgs[Math.floor(Math.random()*msgs.length)];
+// DESCHIDE O SCRISOARE
+window.openLetter = function(type) {
+
+    document.getElementById("letters-menu").style.display = "none";
+    document.getElementById("letter-content").style.display = "block";
+
+    const text = document.getElementById("letter-text");
+
+    if(type === "vday") {
+        text.innerHTML = 
+                 `
+                Draga cacacioasa,
+        E clar ca nu fac bine ca te obisnuiesc cu scrisorici asa di des dar de data asta uite ca o fac 
+        mai special oliaca si este o scrisoare electronica , desi stiu ca probabil e alt sentiment sa primesti 
+        o scrisorica fizica , trebuie sa intelegi ca omenirea va evolua si cel mai probabil in 100 de ani asa vor 
+        primii toate fetele scrisorici , iar tu vei fi una dintre primele fete din lume care a primit o astfel de scrisoare,
+        de aceea ar trebui sa te simti unica si senzational de bine , bun revenind la ale noastre imi pare extrem de rau ca esti racita ,
+        si mi mai pare rau si ca am cobit cand am zis ca vei raci cand eram la scarite la lic , dar norocul tau este ca in maxim 2 zile ar trebui sa iti revii,
+        ceea ce inseamna ca vom putea iesi si noi mai mult in aceasta vacanta macar de 3 ori asa , in rest tin sa te anunt ca daca iti place acest site
+        il voi imbunatatii lunar si il voi face sa arate din ce in ce mai bine , totodata mi s ar parea tare spre ex asta ca o idee , sa creez o sectiune cu vacante si 
+        cand mergem in vacante si facem poze sa adaug acolo bucuresti si sa fie tot ce am facut noi si asa mai departe , inca o chestie despre site
+        ai grija ca link ul asta il poate deschide oricine si poate vedea ce e aici deci de sugerat si de preferat ar fi sa nu l mai dai la nimeni!!
+            In concluzie, sper ca ti a placut aceasta mica scrisorica a lui miaita care ti iubeste foarte foarte mult si spera sa te vada cat mai curand posibil
+            insanatosiri grabnice!!!!
+        
+
+
+                                        Cu drag,
+                                            Miaita!
+        
+        
+        
+        
+    
+        `
+    ;
+            
+    }   
 }
-
-// ================= TIMER =================
-function showTogetherTimer(){
-    menuDiv.style.display="none";
-    document.getElementById("together-timer").style.display="block";
-    const start = new Date("2025-02-14T00:00:00");
-    const now = new Date();
-    const diff = now - start;
-    const days = Math.floor(diff/1000/60/60/24);
-    document.getElementById("togetherText").textContent = `Suntem împreună de ${days} zile 💖`;
-}
-
-// ================= QUIZ =================
-function openQuizInstructions(){
-    menuDiv.style.display="none";
-    document.getElementById("quiz-instructions").style.display="block";
-}
-
-function startQuiz(){
-    document.getElementById("quiz-instructions").style.display="none";
-    document.getElementById("quiz-container").style.display="block";
-
-    const questions = [
-        {q:"Ce zi am sărbătorit împreună prima dată?", a:["1 Martie","14 Februarie","1 Aprilie","25 Decembrie"],c:1},
-        {q:"Culoarea ta preferată?", a:["Roșu","Albastru","Verde","Roz"],c:3}
-    ];
-
-    let current = 0;
-    let balance = 0;
-
-    const quizQuestion = document.getElementById("quiz-question");
-    const quizAnswers = document.getElementById("quiz-answers");
-    const balanceSpan = document.getElementById("balance");
-
-    function showQuestion(){
-        quizQuestion.textContent = questions[current].q;
-        quizAnswers.innerHTML="";
-        questions[current].a.forEach((ans,i)=>{
-            const btn = document.createElement("button");
-            btn.textContent=ans;
-            btn.className="menu-btn";
-            btn.addEventListener("click",()=>{
-                if(i===questions[current].c) balance+=10;
-                current++;
-                if(current<questions.length) showQuestion();
-                else showFinal();
-                balanceSpan.textContent=balance;
-            });
-            quizAnswers.appendChild(btn);
-        });
-    }
-
-    function showFinal(){
-        document.getElementById("quiz-container").style.display="none";
-        document.getElementById("quiz-final").style.display="block";
-        document.getElementById("quiz-result").textContent=`Ai câștigat ${balance} lei! 🎉`;
-    }
-
-    showQuestion();
+// INAPOI LA MENIU SCRISORI
+window.backToLettersMenu = function() {
+    document.getElementById("letters-menu").style.display = "block";
+    document.getElementById("letter-content").style.display = "none";
 }
 
 </script>
-
 </body>
 </html>
-
